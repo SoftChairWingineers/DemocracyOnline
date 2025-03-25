@@ -8,5 +8,14 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "next": "^15.2.4",
+    "pg": "^8.14.1",
+    "react": "^19.0.0",
+    "sequelize": "^6.37.6",
+    "webpack": "^5.98.0"
+  }
 }
