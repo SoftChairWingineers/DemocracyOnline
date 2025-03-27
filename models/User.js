@@ -1,27 +1,32 @@
-import { DataTypes } from 'sequelize';
+import { DataTypes } from '@sequelize/core';
 import sequelize from '../lib/db';
 
 const User = sequelize.define('User', {
-  id: {
-    type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4,
-    primaryKey: true,
-  },
   googleId: {
     type: DataTypes.STRING,
-    allowNull: false,
-    unique: true,
+    allowNull: true,
   },
-  displayName: {
+  firstName: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
+  },
+  lastName: {
+    type: DataTypes.STRING, 
+    allowNull: true,
+  },
+  picture: {
+    type: DataTypes.STRING,
+    allowNull: true,
   },
   email: {
     type: DataTypes.STRING,
-    allowNull: true,
     unique: true,
+    allowNull: true,
   },
+}, {
+  tableName: 'Users', // Explicitly specify table name
 });
-await sequelize.sync();
+
+         ;
 
 export default User;
