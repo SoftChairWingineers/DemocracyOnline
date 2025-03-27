@@ -10,9 +10,6 @@ function Home() {
           <a href="/api/auth/google">Log in with Google</a>
         </button>
       </div>
-      <div class="min-h-screen flex items-center justify-center bg-red-primary text-white text-3xl font-bold">
-        Tailwind is working 🎉
-      </div>
     </div>
   );
 }
