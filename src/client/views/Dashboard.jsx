@@ -1,4 +1,5 @@
 import React from "react";
+import HotTopics from "../components/HotTopics";
 
 const hotTopics = ["Abortion", "Tariffs", "Gun Control"];
 
