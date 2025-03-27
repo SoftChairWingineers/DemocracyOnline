@@ -1,6 +1,7 @@
 const { Sequelize } =  require('@sequelize/core');
 const { PostgresDialect } = require('@sequelize/postgres');
 
+
 const database = new Sequelize({
   dialect: PostgresDialect,
   database: 'postgres',
@@ -11,9 +12,12 @@ const database = new Sequelize({
   ssl: false,
   clientMinMessages: 'notice',
 })
+
+
+
 database.authenticate()
   .then(async () => {
-    await database.sync({ alter: true });
+    await database.sync({ force: true });
     console.log('Connection to the database has been established.');
   })
   .catch((error) => {

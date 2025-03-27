@@ -27,7 +27,7 @@ const User = database.define(
     email: {
       type: DataTypes.STRING,
       unique: true,
-      allowNull: true,
+      allowNull: false,
       validate: {
         isEmail: true, // Ensures valid email format
       },
@@ -38,5 +38,6 @@ const User = database.define(
     timestamps: true, // Enables createdAt & updatedAt fields
   }
 );
+
 
 module.exports = User;
