@@ -1,45 +1,42 @@
 const { DataTypes } = require('@sequelize/core');
 const database = require('../index');
-const PoliticalView = require('./PoliticalViews');
 
-const User = database.define(
-  'User',
+const PoliticalView = database.define(
+  'PoliticalView',
   {
-    displayName: {
+    prochoice: {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    googleId: {
+    immigration: {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    firstName: {
+    environment: {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    lastName: {
+    wealthinequality: {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    picture: {
+    transgender: {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    email: {
+    orientation: {
       type: DataTypes.STRING,
-      unique: true,
       allowNull: true,
-      validate: {
-        isEmail: true, // Ensures valid email format
-      },
     },
+    religion: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    }
   },
   {
-    tableName: 'Users', // Explicitly specify table name
+    tableName: 'PoliticalViews', // Explicitly specify table name
     timestamps: true, // Enables createdAt & updatedAt fields
   }
 );
-User.hasOne(PoliticalView);
-PoliticalView.belongsTo(User);
 
-module.exports = User;
+module.exports = PoliticalView;
