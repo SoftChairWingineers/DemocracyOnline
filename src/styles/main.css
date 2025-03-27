@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 body {
-  @apply bg-neutral-light text-neutral-dark font-sans;
+  @apply bg-red-primary text-neutral-dark font-sans;
 }
