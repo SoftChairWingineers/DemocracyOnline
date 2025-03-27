@@ -24,5 +24,12 @@ export default NextAuth({
     //   server: process.env.MAIL_SERVER,
     //   from: 'NextAuth.js <no-reply@example.com>'
     // }),
-  ]
+  ],
+  callbacks: {
+    authorized({req, token}) {
+      if(token){
+        console.log('AYYYYYYYYYYYYYYYE')
+      }
+    }
+  }
 })
