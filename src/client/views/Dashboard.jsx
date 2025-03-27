@@ -1,8 +1,6 @@
 import React from "react";
 import HotTopics from "../components/HotTopics";
 
-const hotTopics = ["Abortion", "Tariffs", "Gun Control"];
-
 function Dashboard() {
   return (
     <div>
@@ -16,6 +14,7 @@ function Dashboard() {
       </div>
       <div className="w-full h-2 bg-gradient-to-r from-red-primary via-neutral-400 to-blue-primary" />
       <div>
+        <HotTopics />
         <h4>If you would like to leave...</h4>
         <button>
           <a href="/logout">Logout</a>
