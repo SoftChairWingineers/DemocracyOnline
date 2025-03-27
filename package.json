@@ -4,17 +4,30 @@
   "description": "An app that allows for actively fact-checked debate over American political subjects",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "connect-session-sequelize": "^7.1.7",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.7",
+    "eslint": "^9.23.0",
+    "eslint-config-next": "^15.2.4",
     "express": "^4.21.2",
+    "express-session": "^1.18.1",
     "next": "^15.2.4",
+    "next-auth": "^4.24.11",
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0",
     "pg": "^8.14.1",
+    "pg-hstore": "^2.3.4",
     "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "sequelize": "^6.37.6",
     "webpack": "^5.98.0"
   }
