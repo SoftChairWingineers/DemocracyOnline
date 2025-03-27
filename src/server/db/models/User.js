@@ -4,11 +4,9 @@ const database = require('../index');
 const User = database.define(
   'User',
   {
-    id: {
-      type: DataTypes.STRING, // Use STRING for better scalability
-      defaultValue: DataTypes.STRING, // Auto-generate STRING
-      primaryKey: true,
-      allowNull: false,
+    displayName: {
+      type: DataTypes.STRING,
+      allowNull: true,
     },
     googleId: {
       type: DataTypes.STRING,
