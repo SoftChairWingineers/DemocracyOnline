@@ -11,6 +11,15 @@ module.exports = {
     path: DIST_DIR,
     filename: 'bundle.js',
   },
+  devServer: {
+    static: {
+      directory: DIST_DIR, // Serve from dist
+    },
+    hot: true,
+    open: true,
+    historyApiFallback: true,
+    port: 4000,
+  },
   resolve: {
     extensions: ['.jsx', '.js'],
   },
