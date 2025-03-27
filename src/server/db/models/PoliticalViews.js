@@ -1,9 +1,18 @@
 const { DataTypes } = require('@sequelize/core');
 const database = require('../index');
+const User = require('./User');
 
 const PoliticalView = database.define(
   'PoliticalView',
   {
+    email: { 
+      type: DataTypes.STRING,
+      allowNull: false,
+      references: {
+        model: User,
+        key: 'email',
+      }
+    },
     prochoice: {
       type: DataTypes.STRING,
       allowNull: true,
@@ -38,5 +47,8 @@ const PoliticalView = database.define(
     timestamps: true, // Enables createdAt & updatedAt fields
   }
 );
+
+User.hasOne(PoliticalView, { foreignKey: 'email', sourceKey: 'email'});
+PoliticalView.belongsTo(User, { foreignKey: 'email', targetKey: 'email'});
 
 module.exports = PoliticalView;

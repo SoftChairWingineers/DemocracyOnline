@@ -1,6 +1,5 @@
 const { DataTypes } = require('@sequelize/core');
 const database = require('../index');
-const PoliticalView = require('./PoliticalViews');
 
 const User = database.define(
   'User',
@@ -28,7 +27,7 @@ const User = database.define(
     email: {
       type: DataTypes.STRING,
       unique: true,
-      allowNull: true,
+      allowNull: false,
       validate: {
         isEmail: true, // Ensures valid email format
       },
@@ -39,7 +38,6 @@ const User = database.define(
     timestamps: true, // Enables createdAt & updatedAt fields
   }
 );
-User.hasOne(PoliticalView);
-PoliticalView.belongsTo(User);
+
 
 module.exports = User;

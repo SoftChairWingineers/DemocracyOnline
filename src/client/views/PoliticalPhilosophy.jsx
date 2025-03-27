@@ -4,9 +4,9 @@ import axios from 'axios';
 function PoliticalPhilosophy() {
 
 const getAllTopics = () => {
-  axios.get('api/politicalPhilosophy/getTopics')
+  axios.get('/api/politicalPhilosophy/getTopics')
     .then((value) => {
-      console.log('successfully got topics', value);
+      console.log('successfully got topicsss', value);
     })
     .catch((err) => {
       console.error('there is a fuck up w/ topics', error)
