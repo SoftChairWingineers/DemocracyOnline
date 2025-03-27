@@ -10,7 +10,7 @@ function Dashboard() {
           DemocracyOnline
         </h1>
         <p className="text-gray-secondary mt-2 text-lg italic">
-          A platform for balanced political conversations.
+          Instant facts for every opinion
         </p>
       </div>
       <div className="w-full h-2 bg-gradient-to-r from-red-primary via-neutral-400 to-blue-primary" />
