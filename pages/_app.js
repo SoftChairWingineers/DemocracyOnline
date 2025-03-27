@@ -1,17 +1,13 @@
-import { useEffect } from 'react';
-import { useRouter } from 'next/router';
+import { useEffect, useState } from "react";
 
-export default function App({ Component, pageProps }) {
+export default function MyApp({ Component, pageProps }) {
   const [user, setUser] = useState(null);
-  const router = useRouter();
 
   useEffect(() => {
-    fetch('/api/auth/session')
+    fetch("/api/user")
       .then((res) => res.json())
       .then((data) => {
-        if (!data.user) {
-          router.push('/login');
-        }
+        if (data.user) setUser(data.user);
       });
   }, []);
 

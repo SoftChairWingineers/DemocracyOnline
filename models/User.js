@@ -1,5 +1,5 @@
 import { DataTypes } from 'sequelize';
-import sequelize from './db';
+import sequelize from '../lib/db';
 
 const User = sequelize.define('User', {
   id: {
@@ -22,5 +22,6 @@ const User = sequelize.define('User', {
     unique: true,
   },
 });
-sequelize.sync();
-export { sequelize, User };
+await sequelize.sync();
+
+export default User;
