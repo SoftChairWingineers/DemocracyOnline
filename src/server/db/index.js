@@ -1,10 +1,16 @@
-const { Sequelize } = require('sequelize');
+const { Sequelize } =  require('@sequelize/core');
+const { PostgresDialect } = require('@sequelize/postgres');
 
-const database = new Sequelize(process.env.DATABASE_URL, {
-  dialect: 'postgres',
-  logging: false, // Set to `true` if you want to see queries
-});
-
+const database = new Sequelize({
+  dialect: PostgresDialect,
+  database: 'postgres',
+  user: 'postgres',
+  password: 'sudo',
+  host: 'localhost',
+  port: 5432,
+  ssl: false,
+  clientMinMessages: 'notice',
+})
 database.authenticate()
   .then(async () => {
     await database.sync({ alter: true });
@@ -14,4 +20,4 @@ database.authenticate()
     console.error('Unable to connect to the database:', error);
   });
 
-module.exports = database;
+module.exports = database

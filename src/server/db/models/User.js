@@ -1,26 +1,44 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes } = require('@sequelize/core');
 const database = require('../index');
 
-const User = database.define('User', {
-  id: {
-    type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4,
-    primaryKey: true,
+const User = database.define(
+  'User',
+  {
+    id: {
+      type: DataTypes.STRING, // Use STRING for better scalability
+      defaultValue: DataTypes.STRING, // Auto-generate STRING
+      primaryKey: true,
+      allowNull: false,
+    },
+    googleId: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    firstName: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    lastName: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    picture: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    email: {
+      type: DataTypes.STRING,
+      unique: true,
+      allowNull: true,
+      validate: {
+        isEmail: true, // Ensures valid email format
+      },
+    },
   },
-  googleId: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    unique: true,
-  },
-  displayName: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  email: {
-    type: DataTypes.STRING,
-    allowNull: true,
-    unique: true,
-  },
-});
+  {
+    tableName: 'Users', // Explicitly specify table name
+    timestamps: true, // Enables createdAt & updatedAt fields
+  }
+);
 
 module.exports = User;
