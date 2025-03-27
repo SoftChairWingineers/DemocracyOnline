@@ -2,11 +2,6 @@ import { DataTypes } from 'sequelize';
 import sequelize from '../lib/db';
 
 const User = sequelize.define('User', {
-  id: {
-    type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4,
-    primaryKey: true,
-  },
   googleId: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -22,6 +17,5 @@ const User = sequelize.define('User', {
     unique: true,
   },
 });
-await sequelize.sync();
 
 export default User;
