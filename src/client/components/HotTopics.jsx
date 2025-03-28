@@ -20,7 +20,7 @@ export default function HotTopics() {
   }, [getTopics]);
 
   return (
-    <div className="flex flex-row flex-wrap gap-4 py-4 max-w-[75%] mx-auto justify-center">
+    <div className="flex flex-row flex-wrap gap-4 pb-4 max-w-[75%] mx-auto justify-center">
       {topics.map((topic) => (
         <div
           key={topic.id}
