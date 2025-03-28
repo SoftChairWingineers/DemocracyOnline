@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from 'axios';
 
 function Survey({topic}){
 
@@ -7,8 +8,17 @@ function Survey({topic}){
   const [isDragging, setIsDragging] = useState(false);
   const [option1, setOption1] = useState('');
   const [option2, setOption2] = useState('');
-  const [option3, setOption3] = useState('');
-  const [option4, setOption4] = useState('');
+  const [currentView, setCurrentView] =  useState('');
+  const [newView, setNewView] =  useState('');
+  const [allImages, setAllImages] = useState({
+    prochoice: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Human_fetus_10_weeks_with_amniotic_sac_-_therapeutic_abortion.jpg/800px-Human_fetus_10_weeks_with_amniotic_sac_-_therapeutic_abortion.jpg',
+    immigration: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCm2kV45dqxBH8SemJPZW1_Y2LiuX3xNd2qQ&s',
+    environment: 'https://images.stockcake.com/public/d/e/a/deaa2eb5-4ac0-4777-85ce-4ba8e6738780_large/environmental-research-sampling-stockcake.jpg',
+    wealthinequality: 'https://econreview.studentorg.berkeley.edu/wp-content/uploads/2018/03/Wealth-Inequality-in-the-United-States--768x359.png',
+    transgender: 'https://i.ebayimg.com/images/g/9pgAAOSwyA1dpg0j/s-l1200.jpg',
+    orientation: 'https://www.shutterstock.com/image-illustration/sexual-orientation-icon-symbol-shape-260nw-2219555487.jpg',
+    religion: 'https://cdn.articles.media/news/6321e4137377e2aa7e3ff1cc/69d16df4-98f6-4014-a6c2-c8fe6703a63d-c1855e47-40b7-49a7-b4ab-b109bf63d20e.sized-1000x1000.jpg'
+  })
 
   const handlePointerDown = () => {
     setIsDragging(true);
@@ -22,6 +32,34 @@ function Survey({topic}){
   const handleRangeChange = (event) => {
     setRangeValue(parseInt(event.target.value, 10));
   };
+
+  const updateNewView = (e) => {
+    setNewView(e.target.innerText);
+  }
+
+  const updateView = (e) => {
+    console.log(e.target.innerText, 'etargval')
+    console.log(e.target, 'etarg')
+    console.log(e, 'e')
+    let views = {
+      answer: newView,
+      rating: rangeValue,
+    }
+    console.log(views, 'this is what they said');
+
+    axios.post('/api/politicalPhilosophy/UpdateView', {
+      body: {
+        views,
+        topic,
+      }
+    })
+    .then(() => {
+      console.log('post req sent')
+    })
+    .catch((err) => {
+      console.error('error submitting new view')
+    })
+  }
 
   const handleQuestion = (subject) => {
     let title = "";
@@ -55,14 +93,14 @@ function Survey({topic}){
         opt2 = "Do Not Support";
         break;
       case "orientation":
-        title = "What are your views on LGBTQ+ rights?";
-        opt1 = "Support Equal Rights";
-        opt2 = "Oppose LGBTQ+ Policies";
+        title = "Do you believe in the freedom from discrimination and the right to express one's sexuality";
+        opt1 = "Support All Sexual Orientations";
+        opt2 = "Sexuality should be between man & woman only";
         break;
       case "religion":
         title = "Should religion play a role in government policies?";
         opt1 = "Yes, it should influence policies";
-        opt2 = "No, government should be secular";
+        opt2 = "No, I Support Separation Of Church & State";
         break;
       default:
         return; // Do nothing for 'email', 'updatedAt', 'createdAt', 'id'
@@ -92,24 +130,32 @@ if(question === ''){
         {/* Image */}
         <div className="flex justify-center mb-6">
           <img 
-            src="https://via.placeholder.com/300x200" 
+            src={allImages[topic]}
             alt="Card content"
-            className="rounded-lg object-cover h-48 w-full"
+            className="rounded-md object-cover h-30 w-full"
           />
         </div>
         
         {/* Buttons Grid */}
         <div className="grid grid-cols-2 gap-2 mb-6">
-        <button type="button" class=" text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 ">
+        <button 
+        onClick={updateNewView}
+        type="button" className=" text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 ">
            {option1}
           </button>
-          <button className=" text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+          <button 
+          onClick={updateNewView}
+          className=" text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
             {option2}
           </button>
-          <button className=" text-white bg-gradient-to-r from-slate-400 via-slate-500 to-slate-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-slate-300 dark:focus:ring-slate-800 shadow-lg shadow-slate-500/50 dark:shadow-lg dark:shadow-slate-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
-            Undecided / Still Learning / Issue Is Complex
+          <button 
+          onClick={updateNewView}
+          className=" text-white bg-gradient-to-r from-slate-400 via-slate-500 to-slate-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-slate-300 dark:focus:ring-slate-800 shadow-lg shadow-slate-500/50 dark:shadow-lg dark:shadow-slate-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+            Undecided / Still Learning / Topic is nuanced and needs deeper discussion
           </button>
-          <button className=" text-white bg-gradient-to-r from-slate-400 via-slate-500 to-slate-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-slate-300 dark:focus:ring-slate-800 shadow-lg shadow-slate-500/50 dark:shadow-lg dark:shadow-slate-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+          <button 
+          onClick={updateNewView}
+          className=" text-white bg-gradient-to-r from-slate-400 via-slate-500 to-slate-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-slate-300 dark:focus:ring-slate-800 shadow-lg shadow-slate-500/50 dark:shadow-lg dark:shadow-slate-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
             Undecided / Don't Care
           </button>
         </div>
@@ -146,7 +192,11 @@ if(question === ''){
           ))}
         </div>
         <h1>Current View: {topic}</h1>
-      </div>
+        </div>
+        <div className="flex justify-center">
+        <button onClick={updateView} type="button" className="flex justify-center text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">Save</button>
+
+        </div>
     </div>
 </div>
   )
