@@ -4,19 +4,19 @@ const axios = require('axios');
 
 dotenv.config();
 
-const { GNews_API } = process.env;
+const { GNEWS_API } = process.env;
 
 const articlesRouter = Router();
 
-articlesRouter.get('/articles', (res, req) => {
+articlesRouter.get('/', (req, res) => {
   // Make request to GNews API
-  axios.get(`https://gnews.io/api/v4/top-headlines?lang=en&country=us&max=10&apikey=${GNews_API}`)
-  .then((articles) => {
-    console.log(articles);
-    res.statusCode(200).send(articles);
+  axios.get(`https://gnews.io/api/v4/top-headlines?lang=en&country=us&max=10&apikey=${GNEWS_API}`)
+  .then((response) => {
+    res.status(200).send(response.data);
   })
   .catch((err) => {
     console.error('Error with request to GNews in articles router: ', err);
+    res.sendStatus(500);
   });
 })
 

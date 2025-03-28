@@ -18,6 +18,6 @@ apiRouter.use('/ai', aiRouter);
 apiRouter.use('/message', messageRouter);
 apiRouter.use('/suggest', suggestRouter);
 apiRouter.use('/topic', topicRouter);
-apiRouter.use('/topic', articlesRouter);
+apiRouter.use('/articles', articlesRouter);
 
 module.exports = apiRouter;
