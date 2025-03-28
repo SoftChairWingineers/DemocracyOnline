@@ -6,6 +6,7 @@ const Topic = database.define(
   {
     name: {
       type: DataTypes.STRING,
+      unique: true,
       allowNull: false,
     }
   },
