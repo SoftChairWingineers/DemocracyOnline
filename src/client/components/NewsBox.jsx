@@ -38,6 +38,7 @@ export default function NewsBox() {
       .catch((err) => {
         console.error("Error retrieving articles from server: ", err);
         setIsLoading(false);
+        setArticles(articlesObj.articles)
       });
   }, []);
 
@@ -98,7 +99,7 @@ export default function NewsBox() {
               </div>
             </a>
             <div className="text-neutral-dark md:pr-12 flex-1 h-[100px] md:h-auto overflow-auto">
-              <p>{currArticle.description}</p>
+              <p>{currArticle.content}</p>
             </div>
           </motion.div>
         )}

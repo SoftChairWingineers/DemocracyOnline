@@ -7,7 +7,8 @@ function Dashboard() {
     <div>
       <div className="text-center mt-8">
         <h1 className="text-4xl font-extrabold text-neutral-dark">
-          DemocracyOnline
+          <span className="text-red-primary">Democracy</span>
+          <span className="text-blue-primary">Online</span>
         </h1>
         <p className="text-gray-secondary mt-2 text-lg italic">
           Instant facts for every opinion
