@@ -41,6 +41,7 @@ aiRouter.post('/fact', async (req, res) => {
           Message: ${req.body.message}
         `,
       });
+      
       const splitText = text.split('*****');
       let factCheckedMessage = splitText[2].slice(1, -2);
       let factCheckedStatement = splitText[4].slice(1, -1);
@@ -88,6 +89,7 @@ aiRouter.post('/neutral', async (req, res) => {
           Message: ${req.body.message}
         `,
       });
+
       const splitText = text.split('*****');
       let neutralMessage = splitText[2].slice(1, -2);
       let neutralStatement = splitText[4].slice(1, -1);
