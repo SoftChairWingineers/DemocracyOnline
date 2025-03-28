@@ -8,10 +8,6 @@ function Dashboard() {
       <div>
         <HotTopics />
         <NewsBox />
-        <h4>If you would like to leave...</h4>
-        <button>
-          <a href="/logout">Logout</a>
-        </button>
       </div>
       <div>
         <h4>Your Current Political Philosophies</h4>
