@@ -17,30 +17,36 @@ export default function NewsBox() {
       <div className="font-semibold text-2xl pl-4">Current News</div>
       <div className="relative flex flex-col md:flex-row border-blue-primary border-2 rounded-3xl p-4 min-h-[250px] gap-6">
         <button
-          onClick={() => { setCurrArtIndex(currArtIndex - 1) }}
+          onClick={() => {
+            setCurrArtIndex(currArtIndex - 1);
+          }}
           disabled={currArtIndex === 0}
           className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-accent-gold text-neutral-dark p-2 rounded-full shadow disabled:opacity-50 hover:scale-105 transition"
         >
           <ChevronLeft size={24} />
         </button>
         <button
-          onClick={() => { setCurrArtIndex(currArtIndex + 1) }}
+          onClick={() => {
+            setCurrArtIndex(currArtIndex + 1);
+          }}
           disabled={currArtIndex === articles.length - 1}
           className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-accent-gold text-neutral-dark p-2 rounded-full shadow disabled:opacity-50 hover:scale-105 transition"
         >
           <ChevronRight size={24} />
         </button>
-        <div className="flex flex-col gap-2 md:w-1/3 pl-12">
-          <img
-            src="https://picsum.photos/600/400"
-            alt="Article"
-            className="w-full h-auto rounded-xl object-cover"
-          />
-          <h2 className="text-xl font-semibold text-neutral-dark">
+        <div className="flex flex-col gap-2 pl-12 flex-shrink-0">
+          <div className="w-full max-w-[90%] sm:max-w-[300px] md:w-64 lg:w-80 aspect-[3/2] mx-auto">
+            <img
+              src="https://picsum.photos/600/400"
+              alt="Article"
+              className="w-full h-full rounded-xl object-cover"
+            />
+          </div>
+          <h2 className="text-xl font-semibold text-center md:text-left text-neutral-dark">
             Article Headline
           </h2>
         </div>
-        <div className="md:w-2/3 text-neutral-dark pr-12">
+        <div className="text-neutral-dark md:pr-12 flex-1">
           <p>
             This is the article description. On smaller screens it stacks
             beneath the image. On medium and larger screens, it sits to the
