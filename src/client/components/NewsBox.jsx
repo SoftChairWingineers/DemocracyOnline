@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import articlesObj from "../../data/articles.json";
@@ -26,12 +27,17 @@ export default function NewsBox() {
   };
   // Fetch articles
   useEffect(() => {
-    // Make request to get news articles for the day
-    // Set the articles array
-    // Set currArticle to the first element
-  }, [currArtIndex, articles]);
-  // Start auto slide timer
-  // Effect for auto-slide
+    console.log('useEffect called');
+    // Make request to '/api/articles'
+    axios.get('/api/articles')
+    .then(({ data }) => {
+      setArticles(data.articles);
+    })
+    .catch(err => {
+      console.error('Error retrieving articles from server: ', err);
+    })
+  }, []);
+  
   useEffect(() => {
     autoSlideTimer.current = setTimeout(() => {
       handleNext();
