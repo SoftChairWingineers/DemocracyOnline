@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+
 
 function Debates(){
   const location = useLocation();
+  const navigate = useNavigate();
   const topic = location.state;
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
@@ -63,8 +65,15 @@ function Debates(){
   };
 
   return (
+    <div>  
     <div className="max-w-2xl mx-auto p-6 bg-white shadow-md rounded-lg">
       <h1 className="text-xl font-bold mb-4">Debate Topic: {topic}</h1>
+      <button
+        className="mb-4 bg-blue-primary text-white px-4 py-2 rounded"
+        onClick={() => navigate("/dashboard")}
+      >
+        Return to Dashboard
+      </button>
       <div className="mb-4">
         <textarea
           className="w-full p-2 border rounded"
@@ -106,6 +115,7 @@ function Debates(){
           </div>
         ))}
       </div>
+    </div>
     </div>
   );
 }

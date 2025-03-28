@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import Survey from "./Survey";
+import { useNavigate } from 'react-router-dom';
 
 function PoliticalPhilosophy() {
 
   const [ allTopics, setAllTopics ] = useState([]);
-
+    const navigate = useNavigate();
   const getAllTopics = () => {
     axios.get('/api/politicalPhilosophy/getTopics')
       .then((usersPoliticalViews) => {
@@ -47,7 +48,13 @@ useEffect(() => {
 
   return (
     <div>
-    <h1 className="p-6 text-center mb-1 text-xl font-semibold text-red-600">ayye</h1>
+    <button
+        className="mb-4 bg-blue-primary text-white px-4 py-2 rounded"
+        onClick={() => navigate("/dashboard")}
+      >
+        Return to Dashboard
+      </button>
+    <h1 className="p-6 text-center mb-1 text-xl font-semibold text-red-600">Your Political Views</h1>
     <div className="grid grid-cols-3 gap-2 mb-2">
     {allTopics.map((survey) => (
       <Survey topic={survey.topic} answer={survey.answer} rating={survey.rating}></Survey>
