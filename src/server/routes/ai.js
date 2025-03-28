@@ -1,6 +1,8 @@
 const { Router } = require('express');
+const { GoogleGenAI } = require('@google/genai');
 
 const aiRouter = Router();
+const ai = new GoogleGenAI({ apiKey: process.env.GOOGLE_GEN_AI_KEY });
 
 /*
   POST /api/ai/fact
@@ -15,8 +17,23 @@ const aiRouter = Router();
       - factCheckedMessage
       - factCheckStatement
 */
-aiRouter.post('/fact', (req, res) => {
-  res.sendStatus(200);
+aiRouter.post('/fact', async (req, res) => {
+  if (!req.body.message) {
+    res.sendStatus(400); // There must be a message on the request body.
+  } else {
+    try {
+      const response = await ai.models.generateContent({
+        model: 'gemini-2.0-flash',
+        contents: `
+          ${req.body.message}
+        `,
+      });
+      res.status(200).send(response.text);
+    } catch (error) {
+      console.error('Failed to POST /api/ai/fact ', error);
+      res.sendStatus(500);
+    }
+  }
 });
 
 /*
