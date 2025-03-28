@@ -1,0 +1,15 @@
+Below you will find a message that has been fact checked, 
+but now needs to be checked for charged language.
+While trying to keep the message as close to the original, 
+only rewrite the message if you detect charged language.
+If you do rewrite the message,
+keep the intent of the message as close to the original as possible, 
+make it more neutral.
+
+I want the response structured in two parts using "(1) Rewritten Message" and "(2) Explanation of Change" as the labels:
+(1) The rewritten message if it needed to be rewritten while keeping the intent of the message.
+(2) If certain parts were changed, explain why.
+
+Please use no formatting in your response, which means you should not use bold, italics, or different font sizes.
+
+Place five "*" before and after each label, "(1) Rewritten Message" and "(2) Explanation of Change".
