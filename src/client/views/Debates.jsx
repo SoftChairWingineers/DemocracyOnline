@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-
+import axios from 'axios';
 
 function Debates(){
   const location = useLocation();
@@ -10,21 +10,15 @@ function Debates(){
   const [newMessage, setNewMessage] = useState("");
   const [replies, setReplies] = useState({});
 
-  useEffect(() => {
-    /**
-     * Get all messages from database
-     */
-    /*
-    axios.get(-route to get messages-)
-      .then((arrayOfMessages) => {
-        setMessages(arrayOfMessages)
-        })
+  const getMessages = useCallback(() => {
+    axios.get(`/api/message/${topic.id}`)
+      .then(({ data }) => {
+        setMessages(data);
+      })
       .catch((error) => {
-        console.error('failed to get messages on debate topic', topic, error);
-        })
-    */
-
-  }, []);
+        console.error('Failed to getMessages: ', error);
+      });
+  }, [topic]);
 
   const aiFactChecker = () => {
     /**
@@ -63,6 +57,12 @@ function Debates(){
     setMessages(updatedMessages);
     setReplies({ ...replies, [messageId]: "" });
   };
+
+  useEffect(() => {
+    getMessages();
+  }, [getMessages]);
+
+  console.log('Messages: ', messages);
 
   return (
     <div>  
