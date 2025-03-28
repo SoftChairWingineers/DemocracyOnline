@@ -38,6 +38,7 @@ export default function NewsBox() {
       .catch((err) => {
         console.error("Error retrieving articles from server: ", err);
         setIsLoading(false);
+        setArticles(articlesObj.articles)
       });
   }, []);
 
