@@ -16,16 +16,6 @@ fs.readFile(factsPath, { encoding: 'utf8' })
     console.error('Failed to read facts rule file: ', error);
   });
 
-const neutralPath = path.resolve(__dirname, 'aiRules', 'neutral.txt');
-let neutralRule;
-fs.readFile(neutralPath, { encoding: 'utf8' })
-  .then((contents) => {
-    neutralRule = contents;
-  })
-  .catch((error) => {
-    console.error('Failed to read facts rule file: ', error);
-  });
-
 /*
   POST /api/ai/fact
     - Send message in request body { message }
@@ -44,20 +34,34 @@ aiRouter.post('/fact', async (req, res) => {
     res.sendStatus(400); // There must be a message on the request body.
   } else {
     try {
-      const response = await ai.models.generateContent({
+      const { text } = await ai.models.generateContent({
         model: 'gemini-2.0-flash',
         contents: `
           ${factsRule}
-          ${req.body.message}
+          Message: ${req.body.message}
         `,
       });
-      res.status(200).send(response.text);
+      const splitText = text.split('*****');
+      let factCheckedMessage = splitText[2].slice(1, -2);
+      let factCheckedStatement = splitText[4].slice(1, -1);
+
+      res.status(200).send({ factCheckedMessage, factCheckedStatement });
     } catch (error) {
       console.error('Failed to POST /api/ai/fact ', error);
       res.sendStatus(500);
     }
   }
 });
+
+const neutralPath = path.resolve(__dirname, 'aiRules', 'neutral.txt');
+let neutralRule;
+fs.readFile(neutralPath, { encoding: 'utf8' })
+  .then((contents) => {
+    neutralRule = contents;
+  })
+  .catch((error) => {
+    console.error('Failed to read facts rule file: ', error);
+  });
 
 /*
   POST /api/ai/neutral
@@ -72,8 +76,28 @@ aiRouter.post('/fact', async (req, res) => {
       - neutralMessage
       - neutralStatement
 */
-aiRouter.post('/neutral', (req, res) => {
-  res.sendStatus(200);
+aiRouter.post('/neutral', async (req, res) => {
+  if (!req.body.message) {
+    res.sendStatus(400); // There must be a message on the request body.
+  } else {
+    try {
+      const { text } = await ai.models.generateContent({
+        model: 'gemini-2.0-flash',
+        contents: `
+          ${neutralRule}
+          Message: ${req.body.message}
+        `,
+      });
+      const splitText = text.split('*****');
+      let neutralMessage = splitText[2].slice(1, -2);
+      let neutralStatement = splitText[4].slice(1, -1);
+
+      res.status(200).send({ neutralMessage, neutralStatement });
+    } catch (error) {
+      console.error('Failed to POST /api/ai/fact ', error);
+      res.sendStatus(500);
+    }
+  }
 });
 
 module.exports = aiRouter;
