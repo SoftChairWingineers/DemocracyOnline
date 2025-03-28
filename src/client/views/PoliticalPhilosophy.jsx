@@ -30,9 +30,11 @@ useEffect(() => {
   return (
     <div>
     <h1 className="p-6 text-center mb-1 text-xl font-semibold text-red-600">ayye</h1>
+    <div className="grid grid-cols-3 gap-2 mb-2">
     {allTopics.map((topic) => (
       <Survey topic={topic}></Survey>
   ))}
+  </div>
   </div>
   )
 
