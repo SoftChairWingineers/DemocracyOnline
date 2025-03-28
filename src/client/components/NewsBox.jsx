@@ -1,35 +1,62 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function NewsBox() {
   const [articles, setArticles] = useState([{}, {}, {}, {}, {}]);
   const [currArticle, setCurrArticle] = useState({});
   const [currArtIndex, setCurrArtIndex] = useState(0);
+  const [direction, setDirection] = useState("right");
+  const autoSlideTimer = useRef(null);
 
+  const handleNext = () => {
+    // Clear the timer for auto sliding
+    clearTimeout(autoSlideTimer.current);
+    setDirection("right");
+    setCurrArtIndex((prev) => (prev + 1) % articles.length);
+  };
+  
+  const handlePrev = () => {
+    // Clear the timer for auto sliding
+    clearTimeout(autoSlideTimer.current);
+    setDirection("left");
+    setCurrArtIndex((prev) =>
+      prev === 0 ? articles.length - 1 : prev - 1
+    );
+  };
+  // Fetch articles
   useEffect(() => {
     // Make request to get news articles for the day
     // Set the articles array
     // Set currArticle to the first element
   }, [currArtIndex, articles]);
+  // Start auto slide timer
+  // Effect for auto-slide
+useEffect(() => {
+  autoSlideTimer.current = setTimeout(() => {
+    handleNext();
+  }, 10000);
 
+  return () => clearTimeout(autoSlideTimer.current);
+}, [currArtIndex]);
   return (
     <div className="flex flex-col gap-2 px-4 md:max-w-[80%] lg:max-w-[60%] xl:max-w-[50%] mx-auto">
       <div className="font-semibold text-2xl pl-4">Current News</div>
-      <div className="relative flex flex-col md:flex-row border-blue-primary border-2 rounded-3xl p-4 min-h-[250px] gap-6">
+      <motion.div
+      key={currArticle.id}
+      initial={{ x: direction === 'left' ? -100 : 100, opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      exit={{ x: direction === 'left' ? 100 : -100, opacity: 0 }}
+      transition={{ duration: 0.3 }}
+      className="relative flex flex-col md:flex-row border-blue-primary border-2 rounded-3xl p-4 min-h-[250px] gap-6">
         <button
-          onClick={() => {
-            setCurrArtIndex(currArtIndex - 1);
-          }}
-          disabled={currArtIndex === 0}
+          onClick={handlePrev}
           className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-accent-gold text-neutral-dark p-2 rounded-full shadow disabled:opacity-50 hover:scale-105 transition"
         >
           <ChevronLeft size={24} />
         </button>
         <button
-          onClick={() => {
-            setCurrArtIndex(currArtIndex + 1);
-          }}
-          disabled={currArtIndex === articles.length - 1}
+          onClick={handleNext}
           className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-accent-gold text-neutral-dark p-2 rounded-full shadow disabled:opacity-50 hover:scale-105 transition"
         >
           <ChevronRight size={24} />
@@ -53,7 +80,7 @@ export default function NewsBox() {
             right of the image.
           </p>
         </div>
-      </div>
+      </motion.div>
       <div className="flex justify-center gap-2 mt-4">
         {articles.map((_, index) => (
           <span
