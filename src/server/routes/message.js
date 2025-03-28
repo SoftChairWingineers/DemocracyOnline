@@ -1,6 +1,8 @@
 const { Router } = require('express');
 
 const Message = require('../db/models/Message');
+const User = require('../db/models/User');
+const Reply = require('../db/models/Reply');
 
 const messageRouter = Router();
 
@@ -47,7 +49,11 @@ messageRouter.get('/:topicId', async (req, res) => {
       order: [
         ['createdAt', 'DESC'],
       ],
-    })
+      include: {
+        all: true,
+        nested: true,
+      },
+    });
     res.status(200).send(messages);
   } catch (error) {
     console.error('Failed to GET /api/message/:topicId ', error);
