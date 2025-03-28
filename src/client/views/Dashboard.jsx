@@ -8,7 +8,7 @@ function Dashboard() {
     <div>
       <div>
         <HotTopics />
-        <div className="flex flex-col lg:flex-row gap-3 items-center">
+        <div className="flex flex-col lg:flex-row gap-3 items-center px-6">
         <NewsBox />
         <PhilosophyBox />
         </div>

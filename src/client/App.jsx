@@ -11,7 +11,7 @@ function App() {
     <>
       <div className="text-center mt-8">
       <div className="flex justify-end">
-        <button className="bg-red-primary px-4 mx-4 py-2 rounded-xl shadow">
+        <button className="bg-red-primary px-4 mx-4 py-2 rounded-xl shadow text-neutral-light">
           <a href="/">Logout</a>
         </button>
       </div>
