@@ -5,7 +5,7 @@ import { Loader } from 'lucide-react';
 function PostMessage({ getMessages, topicId }) {
   const [newMessage, setNewMessage] = useState('');
   const [aiResponse, setAiResponse] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   
   const postMessage = () => {
     if (aiResponse === null) {
@@ -29,11 +29,13 @@ function PostMessage({ getMessages, topicId }) {
   };
 
   const aiFactChecker = () => {
+    setIsLoading(true);
     axios.post('/api/ai/fact', {
       message: newMessage,
     })
       .then(({ data }) => {
         setAiResponse(data);
+        setIsLoading(false);
       })
       .catch((error) => {
         console.error('Failed to fact check with AI: ', error);
@@ -63,20 +65,26 @@ function PostMessage({ getMessages, topicId }) {
         </div>
       </div>
     ) : (
-    <div className="mb-4">
-      <textarea
-        className="w-full p-2 border rounded"
-        placeholder="Your thoughts will be checked for reasonability by A.I. ..."
-        value={newMessage}
-        onChange={(e) => setNewMessage(e.target.value)}
-      />
-      <button
-        className="mt-2 bg-blue-primary text-white px-4 py-2 rounded"
-        onClick={aiFactChecker}
-      >
-        Post Message
-      </button>
-    </div>
+      isLoading ? (
+        <div className="flex justify-center items-center h-64">
+          <Loader className="w-12 h-12 text-blue-primary animate-spin" />
+        </div>
+      ) : (
+        <div className="mb-4">
+          <textarea
+            className="w-full p-2 border rounded"
+            placeholder="Your thoughts will be checked for reasonability by A.I. ..."
+            value={newMessage}
+            onChange={(e) => setNewMessage(e.target.value)}
+          />
+          <button
+            className="mt-2 bg-blue-primary text-white px-4 py-2 rounded"
+            onClick={aiFactChecker}
+          >
+            Post Message
+          </button>
+        </div>
+      )
     )
   );
 }
