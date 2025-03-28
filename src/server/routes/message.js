@@ -8,7 +8,7 @@ const messageRouter = Router();
 
 /*
   POST /api/message
-    - Send fact checked and neutralized message in request body with topic ID: { message: { content, topicId, respondingTo? } }
+    - Send fact checked and neutralized message in request body with topic ID: { message: { content, topicId } }
     - Store message in database with topic ID and user ID
       - If the message is replying to a specific message, include the id of the message being replied to
     - Send status 201 for successful POST
