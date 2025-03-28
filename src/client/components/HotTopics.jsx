@@ -26,7 +26,7 @@ export default function HotTopics() {
           key={topic.id}
           className="border-accent-gold border-2 rounded-xl font-bold text-neutral-dark text-center px-4"
         >
-          <Link state={topic.name} style={{ flex: 1 }} to={`/Debates/${topic.name}`}>
+          <Link state={topic} style={{ flex: 1 }} to={`/Debates/${topic.name}`}>
           {topic.name}
               </Link>
         </div>
