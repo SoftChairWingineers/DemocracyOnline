@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const hotTopics = ["Abortion", "Tariffs", "Gun Control", "The Border", "DOGE", "Middle East"];
 
@@ -26,8 +27,12 @@ export default function HotTopics() {
         <div
           key={topic.id}
           className="border-accent-gold border-2 rounded-xl font-bold text-neutral-dark text-center px-4"
+          
         >
+          <Link state={topic.name} style={{ flex: 1 }} to={`/Debates/${topic.name}`}>
           {topic.name}
+              </Link>
+         
         </div>
       ))}
     </div>
