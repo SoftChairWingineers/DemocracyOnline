@@ -2,12 +2,14 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+import PostMessage from '../components/debates/PostMessage';
+
 function Debates(){
   const location = useLocation();
   const navigate = useNavigate();
   const topic = location.state;
   const [messages, setMessages] = useState([]);
-  const [newMessage, setNewMessage] = useState("");
+  
   const [replies, setReplies] = useState({});
 
   const getMessages = useCallback(() => {
@@ -19,29 +21,6 @@ function Debates(){
         console.error('Failed to getMessages: ', error);
       });
   }, [topic]);
-
-  const postMessage = () => {
-    if (newMessage.trim() === "") {
-      return;
-    }
-    axios.post('/api/message', {
-      message: {
-        content: newMessage,
-        topicId: topic.id,
-      },
-    })
-      .then(getMessages)
-      .then(() => {
-        setNewMessage('');
-      })
-      .catch((error) => {
-        console.error('Failed to postMessage: ', error);
-      });    
-  };
-
-  const aiFactChecker = () => {
-    postMessage();
-  }
 
   const handleReply = (messageId, replyText) => {
     if (replyText.trim() === "") return;
@@ -68,20 +47,7 @@ function Debates(){
       >
         Return to Dashboard
       </button>
-      <div className="mb-4">
-        <textarea
-          className="w-full p-2 border rounded"
-          placeholder="Your thoughts will be checked for reasonability by A.I. ..."
-          value={newMessage}
-          onChange={(e) => setNewMessage(e.target.value)}
-        />
-        <button
-          className="mt-2 bg-blue-primary text-white px-4 py-2 rounded"
-          onClick={aiFactChecker}
-        >
-          Post Message
-        </button>
-      </div>
+      <PostMessage getMessages={getMessages} topicId={topic.id} />
       <div>
         {messages.map((msg) => (
           <div key={msg.id} className="mb-4 p-3 border rounded">
