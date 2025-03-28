@@ -20,11 +20,11 @@ export default function HotTopics() {
   }, [getTopics]);
 
   return (
-    <div className="flex flex-row flex-wrap gap-4 py-4 max-w-[75%] mx-auto justify-center">
+    <div className="flex flex-row flex-wrap gap-4 pb-4 max-w-[75%] mx-auto justify-center">
       {topics.map((topic) => (
         <div
           key={topic.id}
-          className="border-accent-gold border-2 rounded-xl font-bold text-neutral-dark text-center px-4"
+          className="border-accent-gold border-2 rounded-xl font-bold text-neutral-dark text-center px-4 hover:bg-accent-gold/20 hover:shadow-md transition"
         >
           <Link state={topic} style={{ flex: 1 }} to={`/Debates/${topic.name}`}>
           {topic.name}

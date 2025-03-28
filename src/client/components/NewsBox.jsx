@@ -65,7 +65,7 @@ export default function NewsBox() {
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: direction === "left" ? 100 : -100, opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="relative flex flex-col border-blue-primary border-2 rounded-3xl p-4 h-[450px] md:h-[400px] gap-6"
+            className="relative flex flex-col items-center border-blue-primary border-2 rounded-3xl p-4 h-[450px] md:h-[400px] gap-6"
           >
             <button
               onClick={handlePrev}
@@ -98,7 +98,7 @@ export default function NewsBox() {
                 </h2>
               </div>
             </a>
-            <div className="text-neutral-dark md:pr-12 flex-1 h-[100px] md:h-auto overflow-auto">
+            <div className="text-neutral-dark max-w-[90%] overflow-auto">
               <p>{currArticle.content}</p>
             </div>
           </motion.div>

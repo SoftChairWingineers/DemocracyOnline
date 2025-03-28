@@ -5,16 +5,6 @@ import NewsBox from "../components/NewsBox";
 function Dashboard() {
   return (
     <div>
-      <div className="text-center mt-8">
-        <h1 className="text-4xl font-extrabold text-neutral-dark">
-          <span className="text-red-primary">Democracy</span>
-          <span className="text-blue-primary">Online</span>
-        </h1>
-        <p className="text-gray-secondary mt-2 text-lg italic">
-          Instant facts for every opinion
-        </p>
-      </div>
-      <div className="w-full h-2 bg-gradient-to-r from-red-primary via-neutral-400 to-blue-primary" />
       <div>
         <HotTopics />
         <NewsBox />
