@@ -18,6 +18,13 @@ module.exports = {
     open: true,
     historyApiFallback: true,
     port: 4000,
+    proxy: [
+      {
+        context: ['/api'],
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+      },
+    ],
   },
   resolve: {
     extensions: ['.jsx', '.js'],
