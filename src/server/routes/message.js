@@ -48,11 +48,17 @@ messageRouter.get('/:topicId', async (req, res) => {
       where: { topicId: +(topicId) },
       order: [
         ['createdAt', 'DESC'],
+        [Reply, 'createdAt', 'ASC']
       ],
-      include: {
-        all: true,
-        nested: true,
-      },
+      include: [
+        {
+          model: User
+        },
+        {
+          model: Reply,
+          include: { model: User }
+        }
+      ],
     });
     res.status(200).send(messages);
   } catch (error) {
