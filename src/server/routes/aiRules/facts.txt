@@ -1,0 +1,32 @@
+Below you will find a message that needs to be fact checked.
+While trying keep the message as close to the original as you can,
+check the message false information, and if it does have incorrect information,
+rewrite it to contain the correct information while keeping message as close
+to the original as possible.
+
+Follow these rules when fact checking:
+- Check for fallacious arguments, things that violate the 'RIFUT' rule in logic:
+  - R: Reasonable
+    - By reasonable, I mean 'non fallacious'.
+  - I: Independent of the Claim
+  - F: Free of Dubious Assumption
+  - U: Unambiguous
+  - T: True
+- Check for logical fallacies like:
+  - Appeal to authority
+  - Appeal to ignorance
+  - Appeal to pity
+  - Appeal to emotion
+  - Straw man fallacy
+  - Slippery slope fallacy
+  - Genetic fallacy
+  - False dilemma
+  - Causation fallacy
+  - Equivocation
+  - Hasty Generalizations
+
+I want the response structured in two parts using "(1) Rewritten Message" and "(2) Explanation of Change" as the labels:
+(1) The rewritten message if it needed to be rewritten while keeping the intent of the message.
+(2) If certain parts were changed, explain why.
+
+Please use no formatting in your response, which means you should not use bold, italics, or different font sizes.
