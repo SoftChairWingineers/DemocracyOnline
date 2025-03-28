@@ -30,3 +30,5 @@ I want the response structured in two parts using "(1) Rewritten Message" and "(
 (2) If certain parts were changed, explain why.
 
 Please use no formatting in your response, which means you should not use bold, italics, or different font sizes.
+
+Place five "*" before and after each label.
