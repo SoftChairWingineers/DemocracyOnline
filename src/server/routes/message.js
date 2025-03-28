@@ -60,4 +60,26 @@ messageRouter.get('/:topicId', async (req, res) => {
   }
 });
 
+/*
+  POST /api/message/reply
+    - Send fact checked and neutralized reply in request body with topic ID: { reply: { content, messageId } }
+    - Store message in database with user ID and user ID
+    - Send status 201 for successful POST
+*/
+messageRouter.post('/reply', async (req, res) => {
+  if (!req.body.reply) {
+    res.sendStatus(400);
+  } else {
+    const { reply } = req.body;
+    reply.userId = req.user.id;
+    try {
+      await Reply.create(reply);
+      res.sendStatus(201);
+    } catch (error) {
+      console.error('Failed POST /api/message/reply ', error);
+      res.sendStatus(500);
+    }
+  }
+});
+
 module.exports = messageRouter;
