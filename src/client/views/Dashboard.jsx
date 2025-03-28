@@ -13,12 +13,6 @@ function Dashboard() {
         <PhilosophyBox />
         </div>
       </div>
-      <div>
-        <h4>Your Current Political Philosophies</h4>
-        <button>
-          <a href="/politicalPhilosophy">Update My Philosophies</a>
-        </button>
-      </div>
     </div>
   );
 }
