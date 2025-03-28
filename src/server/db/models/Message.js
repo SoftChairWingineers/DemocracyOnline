@@ -14,14 +14,9 @@ const Message = database.define(
     respondingTo: {
       type: DataTypes.INTEGER,
       allowNull: true,
-      references: {
-        model: 'Messages',
-        key: 'id'
-      }
     }
   },
   {
-    tableName: 'Messages', // Explicitly specify table name
     timestamps: true, // Enables createdAt & updatedAt fields
   }
 );
@@ -29,7 +24,6 @@ const Message = database.define(
 /*
   Associations for Messages:
 */
-Message.hasMany(Message, { as: 'responses', foreignKey: 'respondingTo' });
 Message.belongsTo(Message, { as: 'origin', foreignKey: 'respondingTo' });
 
 Message.belongsTo(User); // UserId
