@@ -20,32 +20,28 @@ function Debates(){
       });
   }, [topic]);
 
-  const aiFactChecker = () => {
-    /**
-     * 
-     * This is where we will have the message factchecked by ai, then returned for approval by the user
-     * 
-     */
-    /*
-    axios.get((-properAIRoute-, { query: newMessage }))
-      .then((factChecked) => {
-        **alert box that shows the new message**
-        setNewMessage(factChecked);
-        })
+  const postMessage = () => {
+    if (newMessage.trim() === "") {
+      return;
+    }
+    axios.post('/api/message', {
+      message: {
+        content: newMessage,
+        topicId: topic.id,
+      },
+    })
+      .then(getMessages)
+      .then(() => {
+        setNewMessage('');
+      })
       .catch((error) => {
-        console.error('failed to fact-check', error)
-        })
-
-    */
-  handlePostMessage();
-  }
-
-  const handlePostMessage = () => {
-    if (newMessage.trim() === "") return;
-    const messageObj = { id: Date.now(), text: newMessage, replies: [] };
-    setMessages([...messages, messageObj]);
-    setNewMessage("");
+        console.error('Failed to postMessage: ', error);
+      });    
   };
+
+  const aiFactChecker = () => {
+    postMessage();
+  }
 
   const handleReply = (messageId, replyText) => {
     if (replyText.trim() === "") return;
@@ -61,8 +57,6 @@ function Debates(){
   useEffect(() => {
     getMessages();
   }, [getMessages]);
-
-  console.log('Messages: ', messages);
 
   return (
     <div>  
@@ -91,8 +85,8 @@ function Debates(){
       <div>
         {messages.map((msg) => (
           <div key={msg.id} className="mb-4 p-3 border rounded">
-            <p>{msg.text}</p>
-            <div className="mt-2 ml-4">
+            <p>{msg.content}</p>
+            {/* <div className="mt-2 ml-4">
               {msg.replies.map((reply) => (
                 <p key={reply.id} className="text-sm text-gray-700">↳ {reply.text}</p>
               ))}
@@ -111,7 +105,7 @@ function Debates(){
               >
                 Reply
               </button>
-            </div>
+            </div> */}
           </div>
         ))}
       </div>
