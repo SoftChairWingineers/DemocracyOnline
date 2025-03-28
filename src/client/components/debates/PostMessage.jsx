@@ -21,7 +21,6 @@ function PostMessage({ getMessages, topicId }) {
       .then(() => {
         setNewMessage('');
         setAiResponse(null);
-        setIsLoading(true);
       })
       .catch((error) => {
         console.error('Failed to postMessage: ', error);
@@ -40,7 +39,7 @@ function PostMessage({ getMessages, topicId }) {
       .catch((error) => {
         console.error('Failed to fact check with AI: ', error);
       });
-  }
+  };
 
   return (
     aiResponse ? (
