@@ -51,7 +51,7 @@ export default function NewsBox() {
     }
   }, [articles, isLoading, currArtIndex]);
   return (
-    <div className="flex flex-col gap-2 px-4 md:max-w-[80%] lg:max-w-[60%] xl:max-w-[50%] mx-auto">
+    <div className="flex flex-col gap-2 px-4 md:max-w-[80%] lg:max-w-[70%] xl:max-w-[60%] mx-auto">
       <div className="font-semibold text-2xl pl-4">Current News</div>
       <AnimatePresence mode="wait">
         {isLoading ? (
@@ -104,7 +104,7 @@ export default function NewsBox() {
           </motion.div>
         )}
       </AnimatePresence>
-      <div className="flex justify-center gap-2 mt-4">
+      <div className="flex justify-center gap-2 mt-2 mb-6">
         {articles.map((_, index) => (
           <span
             key={index}

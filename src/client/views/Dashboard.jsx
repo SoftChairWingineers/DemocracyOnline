@@ -1,23 +1,17 @@
 import React from "react";
 import HotTopics from "../components/HotTopics";
 import NewsBox from "../components/NewsBox";
+import PhilosophyBox from "../components/PhilosophyBox";
 
 function Dashboard() {
   return (
     <div>
       <div>
         <HotTopics />
+        <div className="flex flex-col lg:flex-row gap-3 items-center px-6">
         <NewsBox />
-        <h4>If you would like to leave...</h4>
-        <button>
-          <a href="/logout">Logout</a>
-        </button>
-      </div>
-      <div>
-        <h4>Your Current Political Philosophies</h4>
-        <button>
-          <a href="/politicalPhilosophy">Update My Philosophies</a>
-        </button>
+        <PhilosophyBox />
+        </div>
       </div>
     </div>
   );
