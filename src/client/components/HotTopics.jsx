@@ -20,16 +20,14 @@ export default function HotTopics() {
     getTopics();
   }, [getTopics]);
 
-  console.log('Topics: ', topics);
-
   return (
     <div className="flex flex-row flex-wrap gap-4 py-4 max-w-[75%] mx-auto justify-center">
-      {hotTopics.map((topic) => (
+      {topics.map((topic) => (
         <div
-          key={topic}
+          key={topic.id}
           className="border-accent-gold border-2 rounded-xl font-bold text-neutral-dark text-center px-4"
         >
-          {topic}
+          {topic.name}
         </div>
       ))}
     </div>
