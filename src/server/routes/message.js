@@ -71,13 +71,17 @@ messageRouter.post('/reply', async (req, res) => {
     res.sendStatus(400);
   } else {
     const { reply } = req.body;
-    reply.userId = req.user.id;
-    try {
-      await Reply.create(reply);
-      res.sendStatus(201);
-    } catch (error) {
-      console.error('Failed POST /api/message/reply ', error);
-      res.sendStatus(500);
+    if (!reply.content || !reply.messageId) {
+      res.sendStatus(400);
+    } else {
+      reply.userId = req.user.id;
+      try {
+        await Reply.create(reply);
+        res.sendStatus(201);
+      } catch (error) {
+        console.error('Failed POST /api/message/reply ', error);
+        res.sendStatus(500);
+      }
     }
   }
 });
