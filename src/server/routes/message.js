@@ -1,12 +1,14 @@
 const { Router } = require('express');
 
 const Message = require('../db/models/Message');
+const User = require('../db/models/User');
+const Reply = require('../db/models/Reply');
 
 const messageRouter = Router();
 
 /*
   POST /api/message
-    - Send fact checked and neutralized message in request body with topic ID: { message: { content, topicId, respondingTo? } }
+    - Send fact checked and neutralized message in request body with topic ID: { message: { content, topicId } }
     - Store message in database with topic ID and user ID
       - If the message is replying to a specific message, include the id of the message being replied to
     - Send status 201 for successful POST
@@ -46,11 +48,47 @@ messageRouter.get('/:topicId', async (req, res) => {
       where: { topicId: +(topicId) },
       order: [
         ['createdAt', 'DESC'],
+        [Reply, 'createdAt', 'ASC']
       ],
-    })
+      include: [
+        {
+          model: User
+        },
+        {
+          model: Reply,
+          include: { model: User }
+        }
+      ],
+    });
     res.status(200).send(messages);
   } catch (error) {
     console.error('Failed to GET /api/message/:topicId ', error);
+  }
+});
+
+/*
+  POST /api/message/reply
+    - Send fact checked and neutralized reply in request body with topic ID: { reply: { content, messageId } }
+    - Store message in database with user ID and user ID
+    - Send status 201 for successful POST
+*/
+messageRouter.post('/reply', async (req, res) => {
+  if (!req.body.reply) {
+    res.sendStatus(400);
+  } else {
+    const { reply } = req.body;
+    if (!reply.content || !reply.messageId) {
+      res.sendStatus(400);
+    } else {
+      reply.userId = req.user.id;
+      try {
+        await Reply.create(reply);
+        res.sendStatus(201);
+      } catch (error) {
+        console.error('Failed POST /api/message/reply ', error);
+        res.sendStatus(500);
+      }
+    }
   }
 });
 
