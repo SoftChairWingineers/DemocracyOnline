@@ -24,7 +24,7 @@ messageRouter.post('/', async (req, res) => {
         await Message.create(message); // Insert message into Messages table
         res.sendStatus(201);
       } catch (error) {
-        console.error('Failed to POST /api/message');
+        console.error('Failed to POST /api/message', error);
         res.sendStatus(500);
       }
     }
@@ -39,8 +39,19 @@ messageRouter.post('/', async (req, res) => {
     - Set status 200
     - Send back the array of message objects
 */
-messageRouter.get('/:topicId', (req, res) => {
-  res.sendStatus(200);
+messageRouter.get('/:topicId', async (req, res) => {
+  const { topicId } = req.params;
+  try {
+    const messages = await Message.findAll({
+      where: { topicId: +(topicId) },
+      order: [
+        ['createdAt', 'DESC'],
+      ],
+    })
+    res.status(200).send(messages);
+  } catch (error) {
+    console.error('Failed to GET /api/message/:topicId ', error);
+  }
 });
 
 module.exports = messageRouter;
