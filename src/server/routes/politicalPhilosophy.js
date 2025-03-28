@@ -22,4 +22,32 @@ politicalPhilosophyRouter.get('/getTopics', (req, res) => {
   })
 })
 
+politicalPhilosophyRouter.post('/UpdateView', (req, res) => {
+  const { body } = req.body;
+  const { topic, views } = body;
+  console.log(topic)
+  console.log(views)
+  const stringViews = JSON.stringify(views);
+  PoliticalView.findOrCreate(
+    {
+      where: {
+        email: req.user.dataValues.email,
+      }
+    },
+  ).then((value) => {
+    console.log(topic);
+    value[0].update({ [topic]: stringViews})
+    .then((updated) => {
+      console.log(updated, 'Successfully updated politicalView Table from PhilosophyRouter UpdateView Route')
+      res.sendStatus(201)
+    }).catch((error) => {
+      console.error('FAIL PoliticalPhilosophyRouter, UpdateView Route')
+      res.sendStatus(500);
+    }).catch((error) => {
+      console.error('FAIL to findOrCreate Political View w/ matching email')
+      res.sendStatus(500);
+    })
+  })
+})
+
 module.exports = politicalPhilosophyRouter;
