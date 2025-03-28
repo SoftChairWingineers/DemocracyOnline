@@ -4,16 +4,21 @@ import axios from 'axios';
 function Message({ getMessages, message }) {
   const [newReply, setNewReply] = useState('');
   
-  // const handleReply = (messageId, replyText) => {
-  //   if (replyText.trim() === "") return;
-  //   const updatedMessages = messages.map((msg) =>
-  //     msg.id === messageId
-  //       ? { ...msg, replies: [...msg.replies, { id: Date.now(), text: replyText }] }
-  //       : msg
-  //   );
-  //   setMessages(updatedMessages);
-  //   setReplies({ ...replies, [messageId]: "" });
-  // };
+  const postReply = () => {
+    axios.post('/api/message/reply', {
+      reply: {
+        content: newReply,
+        messageId: message.id,
+      }
+    })
+      .then(getMessages)
+      .then(() => {
+        setNewReply('');
+      })
+      .catch((error) => {
+        console.error('Failed to postReply:', error);
+      })
+  };
   
   return (
     <div key={message.id} className="mb-4 p-3 border rounded">
@@ -33,6 +38,7 @@ function Message({ getMessages, message }) {
         />
         <button
           className="mt-1 bg-red-primary text-white px-2 py-1 rounded"
+          onClick={postReply}
         >
           Reply
         </button>
