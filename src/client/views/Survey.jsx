@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
 
-function Survey({topic}){
+function Survey({topic, answer, rating}){
 
   const [question, setQuestion] = useState('');
-  const [rangeValue, setRangeValue] = useState(0);
+  const [rangeValue, setRangeValue] = useState(rating);
   const [isDragging, setIsDragging] = useState(false);
   const [option1, setOption1] = useState('');
   const [option2, setOption2] = useState('');
@@ -191,7 +191,7 @@ if(question === ''){
             </button>
           ))}
         </div>
-        <h1>Current View: {topic}</h1>
+        <h1>Current View: {answer}</h1>
         </div>
         <div className="flex justify-center">
         <button onClick={updateView} type="button" className="flex justify-center text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">Save</button>

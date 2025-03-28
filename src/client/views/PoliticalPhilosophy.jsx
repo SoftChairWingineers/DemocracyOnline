@@ -8,13 +8,31 @@ function PoliticalPhilosophy() {
 
   const getAllTopics = () => {
     axios.get('/api/politicalPhilosophy/getTopics')
-      .then((value) => {
-        console.log('successfully got topicsss', value);
+      .then((usersPoliticalViews) => {
+        console.log('successfully got topicsss', usersPoliticalViews);
         let allTopics = [];
-        for(let key in value.data[0]){
-          console.log(value.data[0])
+        for(let key in usersPoliticalViews.data[0]){
+          console.log(usersPoliticalViews.data[0])
+          if(usersPoliticalViews.data[0][key] && key !== 'createdAt' && key !== 'updatedAt' && key !== 'email' && key !== 'id' ){
+            console.log(usersPoliticalViews.data[0][key], 'parsing this');
+            console.log(key, 'the key');
+
+            let parsed = JSON.parse(usersPoliticalViews.data[0][key]);
+          console.log(parsed, 'the parsed object');
+              allTopics.push({ 
+                topic: key, 
+                answer: parsed.answer,
+                rating: parsed.rating,
+            });
+          } else {
+            allTopics.push({ 
+              topic: key, 
+              answer: 'undecided',
+              rating: 0,
+          });
+          }
           console.log(key, 'key for each topic');
-          allTopics.push(key);
+          
         }
         setAllTopics(allTopics);
       })
@@ -31,8 +49,8 @@ useEffect(() => {
     <div>
     <h1 className="p-6 text-center mb-1 text-xl font-semibold text-red-600">ayye</h1>
     <div className="grid grid-cols-3 gap-2 mb-2">
-    {allTopics.map((topic) => (
-      <Survey topic={topic}></Survey>
+    {allTopics.map((survey) => (
+      <Survey topic={survey.topic} answer={survey.answer} rating={survey.rating}></Survey>
   ))}
   </div>
   </div>
