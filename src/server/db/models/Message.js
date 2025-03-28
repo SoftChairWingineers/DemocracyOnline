@@ -26,10 +26,10 @@ const Message = database.define(
 */
 Message.belongsTo(Message, { as: 'origin', foreignKey: 'respondingTo' });
 
-Message.belongsTo(User); // UserId
+Message.belongsTo(User); // userId
 User.hasMany(Message);
 
-Message.belongsTo(Topic); // TopicId
+Message.belongsTo(Topic); // topicId
 Topic.hasMany(Message);
 
 module.exports = Message;
