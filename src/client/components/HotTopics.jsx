@@ -24,7 +24,7 @@ export default function HotTopics() {
       {topics.map((topic) => (
         <div
           key={topic.id}
-          className="border-accent-gold border-2 rounded-xl font-bold text-neutral-dark text-center px-4"
+          className="border-accent-gold border-2 rounded-xl font-bold text-neutral-dark text-center px-4 hover:bg-accent-gold/20 hover:shadow-md transition"
         >
           <Link state={topic.name} style={{ flex: 1 }} to={`/Debates/${topic.name}`}>
           {topic.name}
