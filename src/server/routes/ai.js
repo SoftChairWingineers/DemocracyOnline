@@ -1,8 +1,30 @@
+const fs = require('fs/promises');
+const path = require('path');
 const { Router } = require('express');
 const { GoogleGenAI } = require('@google/genai');
 
 const aiRouter = Router();
 const ai = new GoogleGenAI({ apiKey: process.env.GOOGLE_GEN_AI_KEY });
+
+const factsPath = path.resolve(__dirname, 'aiRules', 'facts.txt');
+let factsRule;
+fs.readFile(factsPath, { encoding: 'utf8' })
+  .then((contents) => {
+    factsRule = contents;
+  })
+  .catch((error) => {
+    console.error('Failed to read facts rule file: ', error);
+  });
+
+const neutralPath = path.resolve(__dirname, 'aiRules', 'neutral.txt');
+let neutralRule;
+fs.readFile(neutralPath, { encoding: 'utf8' })
+  .then((contents) => {
+    neutralRule = contents;
+  })
+  .catch((error) => {
+    console.error('Failed to read facts rule file: ', error);
+  });
 
 /*
   POST /api/ai/fact
@@ -25,6 +47,7 @@ aiRouter.post('/fact', async (req, res) => {
       const response = await ai.models.generateContent({
         model: 'gemini-2.0-flash',
         contents: `
+          ${factsRule}
           ${req.body.message}
         `,
       });
