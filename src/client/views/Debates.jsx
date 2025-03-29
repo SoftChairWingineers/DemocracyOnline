@@ -10,10 +10,12 @@ function Debates(){
   const navigate = useNavigate();
   const topic = location.state;
   const [messages, setMessages] = useState([]);
-  
+  const [allFlairs, setAllFlairs] = useState([]);
+
   const getMessages = useCallback(() => {
     axios.get(`/api/message/${topic.id}`)
       .then(({ data }) => {
+        console.log(data)
         setMessages(data);
       })
       .catch((error) => {
@@ -24,6 +26,10 @@ function Debates(){
   useEffect(() => {
     getMessages();
   }, [getMessages]);
+
+  useEffect(() => {
+    getUserInfo()
+  }, []);
 
   return (
     <div>

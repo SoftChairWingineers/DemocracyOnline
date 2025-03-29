@@ -41,7 +41,7 @@ function Message({ getMessages, message }) {
   return (
     <div key={message.id} className="mb-4 p-3 border rounded">
       <p>{message.content}</p>
-
+      <p>{message.user.displayName}</p>
       {/* Replies */}
       <div className="mt-2 ml-4">
         {message.replies.map((reply) => (
