@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Loader } from 'lucide-react';
 
 
-function Replies({ reply }) {
+function Replies({ reply, getFlairColor }) {
   const [newReply, setNewReply] = useState('');
   const [aiResponse, setAiResponse] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -110,7 +110,7 @@ const processResponses = (responses) => {
 <p className="text-sm text-gray-700">{reply.user.displayName}</p>
 <div>
       {flairs.map((flair) => (
-        <span class='grid-cols-7 px-2 py-1 text-[8px] font-semibold text-white bg-blue-500 rounded-full whitespace-nowrap'>{flair}</span>
+        <span className={`px-2 py-1 text-[8px] font-semibold text-white rounded-full whitespace-nowrap ${getFlairColor(flair)}`}>{flair}</span>
       ))}
       </div>
 </div>

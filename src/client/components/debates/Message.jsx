@@ -81,6 +81,24 @@ function Message({ getMessages, message }) {
       console.error(error);
     });
   }
+  const getFlairColor = (flair) => {
+    if (flair.includes('pro-choice')) return 'bg-blue-primary';
+    if (flair.includes('pro-life')) return 'bg-red-700';
+    if (flair.includes('lenient')) return 'bg-green-400';
+    if (flair.includes('strict')) return 'bg-orange-700';
+    if (flair.includes('environment')) return 'bg-lime-400';
+    if (flair.includes('redistributionist')) return 'bg-yellow-700';
+    if (flair.includes('laissez-faire')) return 'bg-amber-500';
+    if (flair.includes('trans-inclusive')) return 'bg-purple-700';
+    if (flair.includes('gender-essentialist')) return 'bg-amber-700';
+    if (flair.includes('sex-positive')) return 'bg-pink-600';
+    if (flair.includes('moral traditionalist')) return 'bg-red-primary';
+    if (flair.includes('separation of church')) return 'bg-indigo-700';
+    if (flair.includes('join church & state')) return 'bg-yellow-300';
+    if (flair.includes('Unconcerned')) return 'bg-black';
+
+    return 'bg-slate-950'; // Default color for unspecified flairs
+  };
 
   const getReplyInfo = () => {
     let userEmail = reply.user.email
@@ -183,14 +201,16 @@ const processResponses = (responses) => {
       <p>{message.user.displayName}</p>
       <div>
       {flairs.map((flair) => (
-        <span class='grid-cols-7 px-2 py-1 text-xs font-semibold text-white bg-blue-500 rounded-full whitespace-nowrap'>{flair}</span>
-      ))}
+        <span className={`px-2 py-1 text-xs font-semibold text-white rounded-full whitespace-nowrap ${getFlairColor(flair)}`}>
+        {flair}
+      </span>
+            ))}
       </div>
       <p>{message.content}</p>
       {/* Replies */}
       <div className="mt-2 ml-4">
         {message.replies.map((reply) => (
-          <Replies reply={reply}></Replies>
+          <Replies reply={reply} getFlairColor={getFlairColor}></Replies>
         ))}
       </div>
       </div>
