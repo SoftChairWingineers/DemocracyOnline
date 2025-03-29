@@ -6,7 +6,7 @@ function Message({ getMessages, message }) {
   const [newReply, setNewReply] = useState('');
   const [aiResponse, setAiResponse] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  
+  const [flairs, setFlairs] = useState([]);
   const postReply = () => {
     axios.post('/api/message/reply', {
       reply: {
@@ -45,23 +45,97 @@ function Message({ getMessages, message }) {
         email: userEmail,
       }
     })
-    .then((response) => {
-      // Handle successful response
-      console.log(response.data, ' their flairs ');
+    .then((usersPoliticalViews) => {
+      // Handle successful usersPoliticalViews
+      console.log(usersPoliticalViews.data, ' their flairs ');
+      let allFlairs = [];
+      for(let key in usersPoliticalViews.data[0]){
+        console.log(usersPoliticalViews.data[0])
+        if(usersPoliticalViews.data[0][key] && key !== 'createdAt' && key !== 'updatedAt' && key !== 'email' && key !== 'id' ){
+          console.log(usersPoliticalViews.data[0][key], 'parsing this');
+          console.log(key, 'the key');
+
+          let parsed = JSON.parse(usersPoliticalViews.data[0][key]);
+        console.log(parsed, 'the parsed object');
+            allFlairs.push({ 
+              topic: key, 
+              answer: parsed.answer,
+              rating: parsed.rating,
+          });
+          
+        // } else {
+        //   allTopics.push({ 
+        //     topic: key, 
+        //     answer: 'undecided',
+        //     rating: 0,
+        // });
+        }
+        console.log(key, 'key for each topic');
+      }
+      let processedFlairs = processResponses(allFlairs)
+      setFlairs(processedFlairs);
     })
     .catch((error) => {
       // Handle error
       console.error(error);
     });
   }
+const processResponses = (responses) => {
+    return responses.map(({ topic, answer, rating }) => {
+        switch (topic) {
+            case 'prochoice':
+                if (answer === 'Pro-Choice') return 'pro-choice';
+                if (answer === 'Pro-Life') return 'pro-life';
+                break;
+            case 'immigration':
+                if (answer === 'Should be Lenient') return 'lenient immigration laws';
+                if (answer === 'Should be Strict') return 'strict immigration laws';
+                break;
+            case 'environment':
+                if (answer === 'High Priority') return 'environmentalist';
+                if (answer === 'Not a Priority') return 'anthropocentrist';
+                break;
+            case 'wealthinequality':
+                if (answer === 'Government should intervene more') return 'redistributionist economy';
+                if (answer === 'Let the free market handle it') return 'laissez-faire economy';
+                break;
+            case 'transgender':
+                if (answer === 'Support') return 'trans-inclusive';
+                if (answer === 'Do Not Support') return 'gender-essentialist';
+                break;
+            case 'orientation':
+                if (answer === 'Support All Sexual Orientations') return 'sex-positive';
+                if (answer === 'Sexuality should be between man & woman only') return 'moral traditionalist';
+                break;
+            case 'religion':
+                if (answer === 'Yes, it should influence policies') return 'join church & state';
+                if (answer === 'No, I Support Separation Of Church & State') return 'separation of church & state';
+                break;
+        }
+        
+        if (answer === "Undecided / Don't Care") {
+            return `not concerned about ${topic}`;
+        }
+        if (answer === 'Undecided / Still Learning / Topic is nuanced and needs deeper discussion') {
+            return null; // Skip this response
+        }
+        if (answer === null) {
+          return null; // Skip this response
+      }
+    }).filter(response => response !== null); // Remove null values
+}
 
   useEffect(() => {
     getUserInfo();
-  }, [])
+  }, []);
+
   return (
     <div key={message.id} className="mb-4 p-3 border rounded">
       <p>{message.content}</p>
       <p>{message.user.displayName}</p>
+      {flairs.map((flair) => (
+        <h1 >{flair}</h1>
+      ))}
       {/* Replies */}
       <div className="mt-2 ml-4">
         {message.replies.map((reply) => (
