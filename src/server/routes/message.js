@@ -3,6 +3,7 @@ const { Router } = require('express');
 const Message = require('../db/models/Message');
 const User = require('../db/models/User');
 const Reply = require('../db/models/Reply');
+const PoliticalView = require('../db/models/PoliticalViews');
 
 const messageRouter = Router();
 
@@ -60,6 +61,7 @@ messageRouter.get('/:topicId', async (req, res) => {
         }
       ],
     });
+    
     res.status(200).send(messages);
   } catch (error) {
     console.error('Failed to GET /api/message/:topicId ', error);

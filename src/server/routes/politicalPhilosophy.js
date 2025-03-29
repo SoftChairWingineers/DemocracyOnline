@@ -50,4 +50,9 @@ politicalPhilosophyRouter.post('/UpdateView', (req, res) => {
   })
 })
 
+  politicalPhilosophyRouter.get('/flairs', (req, res) => {
+    console.log('the query is received')
+    res.send('good job bro').status(200)
+  })
+
 module.exports = politicalPhilosophyRouter;

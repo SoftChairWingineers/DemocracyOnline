@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Loader } from 'lucide-react';
 
@@ -38,6 +38,26 @@ function Message({ getMessages, message }) {
       });
   };
 
+  const getUserInfo = () => {
+    let userEmail = message.user.email
+    axios.get('/api/politicalPhilosophy/flairs', {
+      params: {
+        email: userEmail,
+      }
+    })
+    .then((response) => {
+      // Handle successful response
+      console.log(response.data, ' their flairs ');
+    })
+    .catch((error) => {
+      // Handle error
+      console.error(error);
+    });
+  }
+
+  useEffect(() => {
+    getUserInfo();
+  }, [])
   return (
     <div key={message.id} className="mb-4 p-3 border rounded">
       <p>{message.content}</p>

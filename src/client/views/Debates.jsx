@@ -15,7 +15,7 @@ function Debates(){
   const getMessages = useCallback(() => {
     axios.get(`/api/message/${topic.id}`)
       .then(({ data }) => {
-        console.log(data)
+        console.log(data, 'data received from getMessages, set to messagges')
         setMessages(data);
       })
       .catch((error) => {
@@ -24,12 +24,13 @@ function Debates(){
   }, [topic]);
 
   useEffect(() => {
+    console.log('got messages')
     getMessages();
   }, [getMessages]);
 
-  useEffect(() => {
-    getUserInfo()
-  }, []);
+  // useEffect(() => {
+  //   getUserInfo()
+  // }, []);
 
   return (
     <div>
