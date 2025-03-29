@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Loader } from 'lucide-react';
+import Replies from './Replies';
 
 function Message({ getMessages, message }) {
   const [newReply, setNewReply] = useState('');
@@ -80,6 +81,50 @@ function Message({ getMessages, message }) {
       console.error(error);
     });
   }
+
+  const getReplyInfo = () => {
+    let userEmail = reply.user.email
+    axios.get('/api/politicalPhilosophy/flairs', {
+      params: {
+        email: userEmail,
+      }
+    })
+    .then((usersPoliticalViews) => {
+      // Handle successful usersPoliticalViews
+      console.log(usersPoliticalViews.data, ' their flairs ');
+      let allFlairs = [];
+      for(let key in usersPoliticalViews.data[0]){
+        console.log(usersPoliticalViews.data[0])
+        if(usersPoliticalViews.data[0][key] && key !== 'createdAt' && key !== 'updatedAt' && key !== 'email' && key !== 'id' ){
+          console.log(usersPoliticalViews.data[0][key], 'parsing this');
+          console.log(key, 'the key');
+
+          let parsed = JSON.parse(usersPoliticalViews.data[0][key]);
+        console.log(parsed, 'the parsed object');
+            allFlairs.push({ 
+              topic: key, 
+              answer: parsed.answer,
+              rating: parsed.rating,
+          });
+          
+        // } else {
+        //   allTopics.push({ 
+        //     topic: key, 
+        //     answer: 'undecided',
+        //     rating: 0,
+        // });
+        }
+        console.log(key, 'key for each topic');
+      }
+      let processedFlairs = processResponses(allFlairs)
+      setFlairs(processedFlairs);
+    })
+    .catch((error) => {
+      // Handle error
+      console.error(error);
+    });
+  }
+
 const processResponses = (responses) => {
     return responses.map(({ topic, answer, rating }) => {
         switch (topic) {
@@ -145,7 +190,7 @@ const processResponses = (responses) => {
       {/* Replies */}
       <div className="mt-2 ml-4">
         {message.replies.map((reply) => (
-          <p key={reply.id} className="text-sm text-gray-700">↳ {reply.content}</p>
+          <Replies reply={reply}></Replies>
         ))}
       </div>
       </div>
