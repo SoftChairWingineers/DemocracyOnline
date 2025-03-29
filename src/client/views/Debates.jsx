@@ -10,10 +10,12 @@ function Debates(){
   const navigate = useNavigate();
   const topic = location.state;
   const [messages, setMessages] = useState([]);
-  
+  const [allFlairs, setAllFlairs] = useState([]);
+
   const getMessages = useCallback(() => {
     axios.get(`/api/message/${topic.id}`)
       .then(({ data }) => {
+        console.log(data, 'data received from getMessages, set to messagges')
         setMessages(data);
       })
       .catch((error) => {
@@ -22,12 +24,17 @@ function Debates(){
   }, [topic]);
 
   useEffect(() => {
+    console.log('got messages')
     getMessages();
   }, [getMessages]);
 
+  // useEffect(() => {
+  //   getUserInfo()
+  // }, []);
+
   return (
-    <div>
-      <div className="max-w-2xl mx-auto p-6 bg-white shadow-md rounded-lg">
+    <div className="bg-neutral-100">
+      <div className="max-w-2xl mx-auto p-6 bg-neutral-200 shadow-md rounded-lg">
         <h1 className="text-xl font-bold mb-4">Debate Topic: {topic.name}</h1>
         <button
           className="mb-4 bg-blue-primary text-white px-4 py-2 rounded"

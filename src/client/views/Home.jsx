@@ -8,7 +8,7 @@ function Home() {
         fact-checking. Share your opinions and let the facts speak.
       </p>
       <button>
-        <a className="font-semibold px-4 py-2 bg-blue-primary text-neutral-light rounded-lg" href="/api/auth/google">
+        <a className="font-semibold px-4 py-2 bg-blue-primary text-neutral-light rounded-lg hover:bg-red-primary" href="/api/auth/google">
           Log in with Google
         </a>
       </button>

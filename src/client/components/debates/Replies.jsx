@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Loader } from 'lucide-react';
 
-export default function PhilosophyBox() {
 
+function Replies({ reply, getFlairColor }) {
+  const [newReply, setNewReply] = useState('');
+  const [aiResponse, setAiResponse] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [flairs, setFlairs] = useState([]);
 
-
-  const getUserInfo = () => {
-
-    axios.get('/api/politicalPhilosophy/getTopics')
+  const getReplyInfo = () => {
+    let userEmail = reply.user.email
+    axios.get('/api/politicalPhilosophy/flairs', {
+      params: {
+        email: userEmail,
+      }
+    })
     .then((usersPoliticalViews) => {
-      console.log('successfully got topicsss', usersPoliticalViews);
       // Handle successful usersPoliticalViews
       console.log(usersPoliticalViews.data, ' their flairs ');
       let allFlairs = [];
@@ -95,59 +101,24 @@ const processResponses = (responses) => {
 }
 
   useEffect(() => {
-    getUserInfo();
+    getReplyInfo();
   }, []);
 
-
-  const getFlairColor = (flair) => {
-    if (flair.includes('pro-choice')) return 'bg-blue-primary';
-    if (flair.includes('pro-life')) return 'bg-red-700';
-    if (flair.includes('lenient')) return 'bg-green-400';
-    if (flair.includes('strict')) return 'bg-orange-700';
-    if (flair.includes('environment')) return 'bg-lime-400';
-    if (flair.includes('redistributionist')) return 'bg-yellow-700';
-    if (flair.includes('laissez-faire')) return 'bg-amber-500';
-    if (flair.includes('trans-inclusive')) return 'bg-purple-700';
-    if (flair.includes('gender-essentialist')) return 'bg-amber-700';
-    if (flair.includes('sex-positive')) return 'bg-pink-600';
-    if (flair.includes('moral traditionalist')) return 'bg-red-primary';
-    if (flair.includes('separation of church')) return 'bg-indigo-700';
-    if (flair.includes('join church & state')) return 'bg-yellow-300';
-    if (flair.includes('Unconcerned')) return 'bg-black';
-
-    return 'bg-slate-950'; // Default color for unspecified flairs
-  };
-
-
   return (
-<div
-  
-  className="border-blue-primary border-2 rounded-3xl p-4 w-full md:max-w-[600px] 
-    lg:w-1/5 min-h-[150px] md:min-h-[150px] lg:min-h-[350px] hover:cursor-pointer 
-    sm:mb-6 md:mb-6 hover:bg-gray-300/30 hover:shadow-md hover:scale-105 transition flex flex-col items-center"
->
-  <h2 className="w-full text-center text-lg font-bold pb-2">Your Beliefs</h2>
-  
-  {/* Centered Grid Layout for Flair Buttons */}
-  <div className="grid grid-cols-3 gap-3 md:grid-cols-4 lg:grid-cols-2 w-full justify-center">
-    {flairs.map((flair, index) => (
-      <button
-        onClick={() => (window.location.href = "/politicalPhilosophy")}
-        key={index}
-        className="flex items-center justify-center text-center text-sm 
-          font-bold text-white rounded-lg transition-all duration-300 
-          bg-blue-primary hover:bg-red-primary"
-      >
-        {flair}
-      </button>
-    ))}
-  </div>
-  <button
-  className="mt-3 p-3 flex items-center justify-center text-center text-sm 
-  font-bold text-white rounded-lg transition-all duration-300 
-  bg-red-primary hover:bg-blue-primary"
-  onClick={() => (window.location.href = "/politicians")}
-  >Who Are My Representatives?</button>
+<div>
+<p key={reply.id} className="text-sm text-gray-700">↳ {reply.content}</p>
+<p className="text-sm font-semibold text-gray-700">{reply.user.displayName}</p>
+<div>
+      {flairs.map((flair) => (
+        <span className={`px-2 py-1 text-[8px] font-semibold text-white rounded-full whitespace-nowrap ${getFlairColor(flair)}`}>{flair}</span>
+      ))}
+      </div>
 </div>
   );
 }
+
+export default Replies;
+
+
+
+

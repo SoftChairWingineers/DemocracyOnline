@@ -8,6 +8,7 @@ const messageRouter = require('./message');
 const suggestRouter = require('./suggest');
 const topicRouter = require('./topic');
 const articlesRouter = require('./articles');
+const representativesRouter = require('./representatives');
 
 const apiRouter = Router();
 
@@ -19,5 +20,6 @@ apiRouter.use('/message', messageRouter);
 apiRouter.use('/suggest', suggestRouter);
 apiRouter.use('/topic', topicRouter);
 apiRouter.use('/articles', articlesRouter);
+apiRouter.use('/representatives', representativesRouter);
 
 module.exports = apiRouter;

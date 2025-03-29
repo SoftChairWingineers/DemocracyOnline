@@ -50,4 +50,22 @@ politicalPhilosophyRouter.post('/UpdateView', (req, res) => {
   })
 })
 
+  politicalPhilosophyRouter.get('/flairs', (req, res) => {
+    console.log(req.query, 'the query is received')
+    PoliticalView.findOrCreate(
+      {
+        where: {
+          email: req.query.email,
+        },
+      }
+    ).then((value) => {
+      console.log(value)
+      console.log('success getting their views for the message flairs')
+      res.status(200).send(value);
+    }).catch((err) => {
+      console.error('failed getting their views for the message flairs', err)
+      res.sendStatus(404);
+    })
+  })
+
 module.exports = politicalPhilosophyRouter;
