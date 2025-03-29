@@ -33,8 +33,8 @@ function Debates(){
   // }, []);
 
   return (
-    <div>
-      <div className="max-w-2xl mx-auto p-6 bg-white shadow-md rounded-lg">
+    <div className="bg-neutral-100">
+      <div className="max-w-2xl mx-auto p-6 bg-neutral-200 shadow-md rounded-lg">
         <h1 className="text-xl font-bold mb-4">Debate Topic: {topic.name}</h1>
         <button
           className="mb-4 bg-blue-primary text-white px-4 py-2 rounded"

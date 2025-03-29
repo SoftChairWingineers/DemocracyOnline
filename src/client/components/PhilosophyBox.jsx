@@ -124,7 +124,7 @@ const processResponses = (responses) => {
   
   className="border-blue-primary border-2 rounded-3xl p-4 w-full md:max-w-[600px] 
     lg:w-1/5 min-h-[150px] md:min-h-[150px] lg:min-h-[350px] hover:cursor-pointer 
-    sm:mb-6 md:mb-6 hover:bg-gray-400/30 hover:shadow-md hover:scale-105 transition flex flex-col items-center"
+    sm:mb-6 md:mb-6 hover:bg-gray-300/30 hover:shadow-md hover:scale-105 transition flex flex-col items-center"
 >
   <h2 className="w-full text-center text-lg font-bold pb-2">Your Beliefs</h2>
   
@@ -136,14 +136,14 @@ const processResponses = (responses) => {
         key={index}
         className="flex items-center justify-center text-center text-sm 
           font-bold text-white rounded-lg transition-all duration-300 
-          bg-red-primary hover:bg-blue-primary"
+          bg-blue-primary hover:bg-red-primary"
       >
         {flair}
       </button>
     ))}
   </div>
   <button
-  className="flex items-center justify-center text-center text-sm 
+  className="mt-3 p-3 flex items-center justify-center text-center text-sm 
   font-bold text-white rounded-lg transition-all duration-300 
   bg-red-primary hover:bg-blue-primary"
   onClick={() => (window.location.href = "/politicians")}

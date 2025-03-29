@@ -8,6 +8,7 @@ function Message({ getMessages, message }) {
   const [aiResponse, setAiResponse] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [flairs, setFlairs] = useState([]);
+
   const postReply = () => {
     axios.post('/api/message/reply', {
       reply: {
@@ -198,7 +199,7 @@ const processResponses = (responses) => {
   return (
     <div key={message.id} className="mb-4 p-3 border rounded">
       <div>
-      <p>{message.user.displayName}</p>
+      <p className="font-bold">{message.user.displayName}</p>
       <div>
       {flairs.map((flair) => (
         <span className={`px-2 py-1 text-xs font-semibold text-white rounded-full whitespace-nowrap ${getFlairColor(flair)}`}>
@@ -225,13 +226,13 @@ const processResponses = (responses) => {
             <p className="mb-4">{aiResponse.factCheckedStatement}</p>
             <div>
               <button
-                className="mt-2 bg-blue-primary text-white px-4 py-2 rounded mr-2"
+                className="mt-2 text-white px-4 py-2 rounded mr-2 bg-blue-primary hover:bg-red-primary"
                 onClick={() => { setAiResponse(null); }}
               >
                 Back to the Drawing Board
               </button>
               <button
-                className="mt-2 bg-blue-primary text-white px-4 py-2 rounded"
+                className="mt-2 text-white px-4 py-2 rounded bg-blue-primary hover:bg-red-primary"
                 onClick={postReply}
               >
                 Submit Updated Reply
@@ -257,7 +258,7 @@ const processResponses = (responses) => {
                 onChange={(e) => { setNewReply(e.target.value); }}
               />
               <button
-                className="mt-1 bg-red-primary text-white px-2 py-1 rounded"
+                className="mt-1 text-white px-2 py-1 rounded bg-red-primary hover:bg-blue-primary"
                 onClick={aiFactChecker}
               >
                 Reply

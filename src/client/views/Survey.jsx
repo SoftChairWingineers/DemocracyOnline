@@ -118,8 +118,8 @@ if(question === ''){
   return null;
 }
   return (
-    <div>
-   <div className="max-w-sm mx-auto bg-white rounded-xl shadow-md overflow-hidden">
+    <div className=''>
+   <div className="max-w-sm mx-auto bg-neutral-100 rounded-xl shadow-md overflow-hidden border-2 border-blue-primary border-opacity-25">
       {/* Card Content */}
       <div className="p-6">
         {/* Title */}

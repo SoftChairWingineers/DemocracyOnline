@@ -107,7 +107,7 @@ const processResponses = (responses) => {
   return (
 <div>
 <p key={reply.id} className="text-sm text-gray-700">↳ {reply.content}</p>
-<p className="text-sm text-gray-700">{reply.user.displayName}</p>
+<p className="text-sm font-semibold text-gray-700">{reply.user.displayName}</p>
 <div>
       {flairs.map((flair) => (
         <span className={`px-2 py-1 text-[8px] font-semibold text-white rounded-full whitespace-nowrap ${getFlairColor(flair)}`}>{flair}</span>

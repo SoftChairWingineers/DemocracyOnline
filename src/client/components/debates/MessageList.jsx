@@ -4,7 +4,7 @@ import Message from './Message';
 
 function MessageList({ getMessages, messages }) {
   return (
-    <div>
+    <div className="bg-neutral-100">
         {messages.map((message) => (
           <Message getMessages={getMessages} message={message} />
         ))}
