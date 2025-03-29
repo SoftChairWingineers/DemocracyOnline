@@ -83,41 +83,41 @@ function Message({ getMessages, message }) {
 const processResponses = (responses) => {
     return responses.map(({ topic, answer, rating }) => {
         switch (topic) {
-            case 'prochoice':
-                if (answer === 'Pro-Choice') return 'pro-choice';
-                if (answer === 'Pro-Life') return 'pro-life';
-                if (answer === "Undecided / Don't Care") {
+            case `prochoice`:
+                if (answer === `Pro-Choice`) return `pro-choice ${rating}/5`;
+                if (answer === `Pro-Life`) return `pro-life ${rating}/5`;
+                if (answer === "Undecided / Don`t Care") {
                   return `unconcerned on abortion`;
               }
                 break;
-            case 'immigration':
-                if (answer === 'Should be Lenient') return 'lenient immigration laws';
-                if (answer === 'Should be Strict') return 'strict immigration laws';
+            case `immigration`:
+                if (answer === `Should be Lenient`) return `lenient immigration laws ${rating}/5`;
+                if (answer === `Should be Strict`) return `strict immigration laws ${rating}/5`;
                 break;
-            case 'environment':
-                if (answer === 'High Priority') return 'environmentalist';
-                if (answer === 'Not a Priority') return 'anthropocentrist';
+            case `environment`:
+                if (answer === `High Priority`) return `environmentalist ${rating}/5`;
+                if (answer === `Not a Priority`) return `anthropocentrist ${rating}/5`;
                 break;
-            case 'wealthinequality':
-                if (answer === 'Government should intervene more') return 'redistributionist economy';
-                if (answer === 'Let the free market handle it') return 'laissez-faire economy';
+            case `wealthinequality`:
+                if (answer === `Government should intervene more`) return `redistributionist economy ${rating}/5`;
+                if (answer === `Let the free market handle it`) return `laissez-faire economy ${rating}/5`;
                 break;
-            case 'transgender':
-                if (answer === 'Support') return 'trans-inclusive';
-                if (answer === 'Do Not Support') return 'gender-essentialist';
+            case `transgender`:
+                if (answer === `Support`) return `trans-inclusive ${rating}/5`;
+                if (answer === `Do Not Support`) return `gender-essentialist ${rating}/5`;
                 break;
-            case 'orientation':
-                if (answer === 'Support All Sexual Orientations') return 'sex-positive';
-                if (answer === 'Sexuality should be between man & woman only') return 'moral traditionalist';
+            case `orientation`:
+                if (answer === `Support All Sexual Orientations`) return `sex-positive ${rating}/5`;
+                if (answer === `Sexuality should be between man & woman only`) return `moral traditionalist ${rating}/5`;
                 break;
-            case 'religion':
-                if (answer === 'Yes, it should influence policies') return 'join church & state';
-                if (answer === 'No, I Support Separation Of Church & State') return 'separation of church & state';
+            case `religion`:
+                if (answer === `Yes, it should influence policies`) return `join church & state ${rating}/5`;
+                if (answer === `No, I Support Separation Of Church & State`) return `separation of church & state ${rating}/5`;
                 break;
         }
         
         if (answer === "Undecided / Don't Care") {
-            return `unconcerned on ${topic}`;
+            return `Unconcerned on ${topic} ${rating}/5`;
         }
         if (answer === 'Undecided / Still Learning / Topic is nuanced and needs deeper discussion') {
             return null; // Skip this response
@@ -134,16 +134,20 @@ const processResponses = (responses) => {
 
   return (
     <div key={message.id} className="mb-4 p-3 border rounded">
+      <div>
       <p>{message.user.displayName}</p>
+      <div>
       {flairs.map((flair) => (
         <span class='grid-cols-7 px-2 py-1 text-xs font-semibold text-white bg-blue-500 rounded-full whitespace-nowrap'>{flair}</span>
       ))}
+      </div>
       <p>{message.content}</p>
       {/* Replies */}
       <div className="mt-2 ml-4">
         {message.replies.map((reply) => (
           <p key={reply.id} className="text-sm text-gray-700">↳ {reply.content}</p>
         ))}
+      </div>
       </div>
 
       {
