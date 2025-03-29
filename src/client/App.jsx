@@ -5,6 +5,7 @@ import Home from "./views/Home";
 import Dashboard from "./views/Dashboard";
 import PoliticalPhilosophy from "./views/PoliticalPhilosophy";
 import Debates from "./views/Debates";
+import RepresentativeLookup from "./views/RepresentativeComponent";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="politicalPhilosophy" element={<PoliticalPhilosophy />} />
         <Route path="/Debates/*" element={<Debates></Debates>} />
+        <Route path="/politicians" element={<RepresentativeLookup></RepresentativeLookup>}></Route>
       </Routes>
     </>
   );
