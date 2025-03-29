@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
-
+import { useNavigate } from 'react-router-dom';
 const RepresentativeLookup = () => {
+  const navigate = useNavigate();
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [representatives, setRepresentatives] = useState([]);
@@ -46,23 +47,12 @@ const RepresentativeLookup = () => {
       }).catch((err) => {
         console.error(err, 'failed')
       })
-      // const url = `https://www.googleapis.com/civicinfo/v2/representatives?key=${API_KEY}&address=${encodeURIComponent(address)}`;
 
-    //   
-  
-    
-  
-    //   setRepresentatives(reps);
-    // } catch (err) {
-    //   setError("Failed to fetch representatives. Check your API key and ensure billing is enabled.");
-    //   console.error(err);
-    // }
-  
-    // setLoading(false);
   };
 
   return (
     <div className="flex flex-col items-center p-6">
+      
       <h2 className="text-2xl font-bold mb-4">Find Your Representatives</h2>
       
       <div className="flex gap-4 mb-4">
@@ -82,10 +72,16 @@ const RepresentativeLookup = () => {
         />
         <button
           onClick={fetchRepresentatives}
-          className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+          className="px-4 py-2 bg-red-primary text-white rounded-md hover:bg-blue-primary"
         >
           Search
         </button>
+        <button
+        className="px-4 py-2 bg-red-primary text-white rounded-md hover:bg-blue-primary"
+        onClick={() => navigate("/dashboard")}
+      >
+        Return to Dashboard
+      </button>
       </div>
 
       {loading && <p className="text-blue-500">Loading...</p>}

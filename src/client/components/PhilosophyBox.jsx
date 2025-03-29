@@ -121,7 +121,7 @@ const processResponses = (responses) => {
 
   return (
 <div
-  onClick={() => (window.location.href = "/politicalPhilosophy")}
+  
   className="border-blue-primary border-2 rounded-3xl p-4 w-full md:max-w-[600px] 
     lg:w-1/5 min-h-[150px] md:min-h-[150px] lg:min-h-[350px] hover:cursor-pointer 
     sm:mb-6 md:mb-6 hover:bg-gray-400/30 hover:shadow-md hover:scale-105 transition flex flex-col items-center"
@@ -132,6 +132,7 @@ const processResponses = (responses) => {
   <div className="grid grid-cols-3 gap-3 md:grid-cols-4 lg:grid-cols-2 w-full justify-center">
     {flairs.map((flair, index) => (
       <button
+        onClick={() => (window.location.href = "/politicalPhilosophy")}
         key={index}
         className="flex items-center justify-center text-center text-sm 
           font-bold text-white rounded-lg transition-all duration-300 
@@ -141,6 +142,12 @@ const processResponses = (responses) => {
       </button>
     ))}
   </div>
+  <button
+  className="flex items-center justify-center text-center text-sm 
+  font-bold text-white rounded-lg transition-all duration-300 
+  bg-red-primary hover:bg-blue-primary"
+  onClick={() => (window.location.href = "/politicians")}
+  >Who Are My Representatives?</button>
 </div>
   );
 }
