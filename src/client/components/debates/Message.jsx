@@ -86,6 +86,9 @@ const processResponses = (responses) => {
             case 'prochoice':
                 if (answer === 'Pro-Choice') return 'pro-choice';
                 if (answer === 'Pro-Life') return 'pro-life';
+                if (answer === "Undecided / Don't Care") {
+                  return `unconcerned on abortion`;
+              }
                 break;
             case 'immigration':
                 if (answer === 'Should be Lenient') return 'lenient immigration laws';
@@ -114,7 +117,7 @@ const processResponses = (responses) => {
         }
         
         if (answer === "Undecided / Don't Care") {
-            return `not concerned about ${topic}`;
+            return `unconcerned on ${topic}`;
         }
         if (answer === 'Undecided / Still Learning / Topic is nuanced and needs deeper discussion') {
             return null; // Skip this response
@@ -131,11 +134,11 @@ const processResponses = (responses) => {
 
   return (
     <div key={message.id} className="mb-4 p-3 border rounded">
-      <p>{message.content}</p>
       <p>{message.user.displayName}</p>
       {flairs.map((flair) => (
-        <h1 >{flair}</h1>
+        <span class='grid-cols-7 px-2 py-1 text-xs font-semibold text-white bg-blue-500 rounded-full whitespace-nowrap'>{flair}</span>
       ))}
+      <p>{message.content}</p>
       {/* Replies */}
       <div className="mt-2 ml-4">
         {message.replies.map((reply) => (
